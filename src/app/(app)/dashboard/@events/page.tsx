@@ -95,7 +95,9 @@ const EventPage = () => {
           <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-1">
             <CardHeader className="pb-2">
               <CardDescription>Upcoming Event</CardDescription>
-              <CardTitle className="text-4xl">Paraknightlympic's</CardTitle>
+              <CardTitle className="text-4xl">
+                Paraknightlympic&apos;s
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-xs text-muted-foreground">
