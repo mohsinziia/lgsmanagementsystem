@@ -6,12 +6,17 @@ import { useEffect } from "react";
 export default function Home() {
   const { data: session } = useSession();
 
-  useEffect(() => {});
+  interface SessionUser {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  }
 
   if (session) {
+    const user: SessionUser = session.user as SessionUser;
     return (
       <>
-        Signed in as {session.user.email} <br />
+        Signed in as {user.email} <br />
         <Button
           onClick={() => signOut()}
           className="w-full white border border-gray-400 py-2 px-4"
