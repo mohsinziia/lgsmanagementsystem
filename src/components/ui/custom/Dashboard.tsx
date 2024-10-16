@@ -348,10 +348,6 @@ export default function Dashboard({
                   <Link href="#">{window}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {/* <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Recent Orders</BreadcrumbPage>
-              </BreadcrumbItem> */}
             </BreadcrumbList>
           </Breadcrumb>
           <div className="relative ml-auto flex-1 md:grow-0">
