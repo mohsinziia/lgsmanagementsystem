@@ -9,10 +9,9 @@ type ThemeProps = {
   className?: string;
 };
 
-const ThemeCard = ({ theme, className = "" }: ThemeProps, props) => {
+const ThemeCard = ({ theme, className = "" }: ThemeProps) => {
   return (
     <div
-      {...props}
       className={` ${className} items-center rounded-md border-2 border-muted p-1`}
     >
       <div
