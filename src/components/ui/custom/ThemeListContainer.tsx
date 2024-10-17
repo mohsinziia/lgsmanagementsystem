@@ -11,10 +11,7 @@ const ThemeListContainer = () => {
   const [currentTheme, setCurrentTheme] = useState<Theme>("light");
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const theme = useAppSelector((state: RootState) => state.themeStore.theme);
-    setCurrentTheme(theme);
-  }, []);
+  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
 
   const handleThemeChange = (theme: Theme) => {
     // dispatch(setAppTheme({ theme }));
