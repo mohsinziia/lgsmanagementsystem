@@ -8,10 +8,13 @@ import { RootState } from "@/lib/store";
 import { Theme } from "@/lib/theme";
 
 const ThemeListContainer = () => {
-  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  const [currentTheme, setCurrentTheme] = useState<Theme>("light");
   const dispatch = useAppDispatch();
 
-  const [currentTheme, setCurrentTheme] = useState<Theme>(theme);
+  useEffect(() => {
+    const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+    setCurrentTheme(theme);
+  }, []);
 
   const handleThemeChange = (theme: Theme) => {
     // dispatch(setAppTheme({ theme }));
