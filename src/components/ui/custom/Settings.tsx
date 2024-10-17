@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { Card } from "../card";
 
 const Settings = ({
   children,
@@ -11,36 +12,59 @@ const Settings = ({
   handleWindowChange: (window: string) => void;
 }) => {
   return (
-    <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-      <div className="mx-auto grid w-full max-w-6xl gap-2">
-        <h1 className="text-3xl font-semibold">Settings</h1>
+    <div className="space-y-6 p-10 pb-16 md:block">
+      <div className="space-y-0.5">
+        <Card className="p-4">
+          <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
+          <p className="text-muted-foreground">
+            Manage your account settings and set e-mail preferences.
+          </p>
+        </Card>
       </div>
-      <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-        <nav
-          className="grid gap-4 text-sm text-muted-foreground"
-          x-chunk="dashboard-04-chunk-0"
-        >
-          <Link
-            href="#"
-            onClick={() => handleWindowChange("General")}
-            className={`${
-              window === "General" && "font-semibold text-primary"
-            }`}
-          >
-            General
-          </Link>
-          <Link
-            href="#"
-            className={`${window === "Themes" && "font-semibold text-primary"}`}
-            onClick={() => handleWindowChange("Themes")}
-          >
-            Themes
-          </Link>
-        </nav>
+      <div
+        data-orientation="horizontal"
+        role="none"
+        className="shrink-0 bg-border h-[1px] w-full my-6"
+      ></div>
+      <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
+        <Card className="p-4 px-6 self-start">
+          <aside className="-mx-4 ">
+            <nav className="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
+              <Link
+                className={`${
+                  window === "Profile" && "bg-muted hover:bg-muted"
+                } inline-flex rounded-md items-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 hover:bg-transparent hover:underline justify-start`}
+                href="#"
+                onClick={() => {
+                  return handleWindowChange("Profile");
+                }}
+              >
+                Profile
+              </Link>
+
+              <Link
+                className={`${
+                  window === "Appearance" && "bg-muted hover:bg-muted"
+                } inline-flex rounded-md items-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 hover:bg-transparent hover:underline justify-start`}
+                href="#"
+                onClick={() => {
+                  return handleWindowChange("Appearance");
+                }}
+              >
+                Appearance
+              </Link>
+            </nav>
+          </aside>
+        </Card>
         {children}
       </div>
-    </main>
+    </div>
   );
 };
 
 export default Settings;
+
+const s1 =
+  "inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 bg-muted hover:bg-muted justify-start";
+const s2 =
+  "inline-flex items-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground h-9 px-4 py-2 hover:bg-transparent hover:underline justify-start";

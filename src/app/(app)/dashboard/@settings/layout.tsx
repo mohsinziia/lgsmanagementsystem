@@ -7,22 +7,24 @@ import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 export default function Layout({
-  general,
-  themes,
+  profile,
+  appearance,
+  notifications,
 }: Readonly<{
-  general: React.ReactNode;
-  themes: React.ReactNode;
+  profile: React.ReactNode;
+  appearance: React.ReactNode;
+  notifications: React.ReactNode;
 }>) {
-  const [currentSettingsWindow, setCurrentSettingsWindow] = useState("General");
-  const { data: session } = useSession();
+  const [currentSettingsWindow, setCurrentSettingsWindow] =
+    useState("Notifications");
 
   return (
     <Settings
       window={currentSettingsWindow}
       handleWindowChange={setCurrentSettingsWindow}
     >
-      {currentSettingsWindow === "General" && general}
-      {currentSettingsWindow === "Themes" && themes}
+      {currentSettingsWindow === "Profile" && profile}
+      {currentSettingsWindow === "Appearance" && appearance}
     </Settings>
   );
 }
