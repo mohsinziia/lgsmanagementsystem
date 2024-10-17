@@ -1,3 +1,4 @@
+"use client";
 import { getTheme, setTheme, toggleTheme } from "@/lib/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
