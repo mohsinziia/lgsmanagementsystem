@@ -1,4 +1,3 @@
-// import { getTheme, setTheme, Theme } from "@/lib/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 

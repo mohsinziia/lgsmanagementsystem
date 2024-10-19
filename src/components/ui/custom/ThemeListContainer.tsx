@@ -3,9 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import ThemeContainerLabel from "./ThemeContainerLabel";
 import ThemeCard from "./ThemeCard";
 
+import { Theme } from "@/lib/themeSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { Theme } from "@/lib/theme";
 import { RadioGroup, RadioGroupItem } from "../radio-group";
 import { Label } from "../label";
 
