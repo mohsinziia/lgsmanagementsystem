@@ -1,16 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  CreditCard,
-  File,
   Home,
   LayoutDashboardIcon,
   LineChart,
-  ListFilter,
-  MoreVertical,
   Package,
   Package2,
   PanelLeft,
@@ -18,14 +11,12 @@ import {
   Search,
   Settings,
   ShoppingCart,
-  Truck,
   Users2,
   TrophyIcon,
   PartyPopperIcon,
   Moon,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -36,14 +27,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -53,35 +36,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
-import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { signOut } from "next-auth/react";
-
-export const description =
-  "An orders dashboard with a sidebar navigation. The sidebar has icon navigation. The content area has a breadcrumb and search in the header. The main area has a list of recent orders with a filter and export button. The main area also has a detailed view of a single order with order details, shipping information, billing information, customer information, and payment information.";
-
+import ToggleThemeButton from "./toggleThemeButton";
 export default function Dashboard({
   children,
   window,
@@ -97,27 +62,6 @@ export default function Dashboard({
       callbackUrl: "/sign-in",
     });
   };
-
-  const [darkTheme, setDarkTheme] = useState(true);
-
-  useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      setDarkTheme(true);
-    } else {
-      setDarkTheme(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (darkTheme) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkTheme]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -226,23 +170,7 @@ export default function Dashboard({
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
           <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="#"
-                  onClick={() => setDarkTheme(!darkTheme)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-                    darkTheme
-                      ? "text-accent-foreground bg-accent"
-                      : "text-muted-foreground"
-                  } transition-colors hover:text-foreground md:h-8 md:w-8`}
-                >
-                  <Moon className="h-5 w-5" />
-                  <span className="sr-only">Toggle Dark Mode</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Toggle Dark Mode</TooltipContent>
-            </Tooltip>
+            <ToggleThemeButton />
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link

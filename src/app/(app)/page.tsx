@@ -1,29 +1,20 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import Hero from "@/components/ui/custom/Hero";
 import Navbar from "@/components/ui/custom/Navbar";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
+import { setAppTheme } from "@/lib/themeSlice";
+
 export default function Home() {
-  const { data: session } = useSession();
+  // const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  // const dispatch = useAppDispatch();
+  // dispatch(setAppTheme(theme));
 
   interface SessionUser {
     name?: string | null;
     email?: string | null;
     image?: string | null;
   }
-
-  useEffect(() => {
-    const theme = localStorage.getItem("theme");
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-
-    // TODO: remove this line after testing
-    document.documentElement.classList.add("dark");
-  }, []);
 
   return (
     <div className=" bg-muted/40 h-screen grid place-content-center">

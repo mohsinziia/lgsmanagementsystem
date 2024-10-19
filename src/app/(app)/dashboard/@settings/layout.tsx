@@ -9,11 +9,9 @@ import React, { useState } from "react";
 export default function Layout({
   profile,
   appearance,
-  notifications,
 }: Readonly<{
   profile: React.ReactNode;
   appearance: React.ReactNode;
-  notifications: React.ReactNode;
 }>) {
   const [currentSettingsWindow, setCurrentSettingsWindow] =
     useState("Notifications");

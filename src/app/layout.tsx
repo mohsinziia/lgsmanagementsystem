@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/ui/custom/Navbar";
+import { cookies } from "next/headers";
+import { Theme } from "@/lib/themeSlice";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,12 +29,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = cookies();
+  const theme = (cookieStore.get("theme")?.value as Theme) || "light";
+
   return (
     <html lang="en">
       <body
         className={`relative ${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <StoreProvider>
+        <StoreProvider initialTheme={theme}>
           <AuthProvider>{children}</AuthProvider>
         </StoreProvider>
       </body>

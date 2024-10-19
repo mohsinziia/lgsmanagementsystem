@@ -1,12 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Dashboard from "@/components/ui/custom/Dashboard";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import { useAppSelector } from "@/lib/hooks";
+import { RootState } from "@/lib/store";
+import React, { useEffect, useState } from "react";
 
 export default function Layout({
-  children,
   main,
   attendance,
   academics,
@@ -23,11 +22,10 @@ export default function Layout({
   settings: React.ReactNode;
 }>) {
   const [currentWindow, setCurrentWindow] = useState("Main");
-  const { data: session } = useSession();
+  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
 
   const changeWindow = (window: string) => {
     setCurrentWindow(window);
-    console.log(`Changed window to ${window}`);
   };
 
   return (

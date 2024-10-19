@@ -1,33 +1,23 @@
-"use client";
-import { getTheme, setTheme, toggleTheme } from "@/lib/theme";
+// import { getTheme, setTheme, Theme } from "@/lib/theme";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export type Theme = "light" | "dark";
+
 type ThemeState = {
-  theme: "light" | "dark";
+  theme: Theme;
 };
 
 const initialState: ThemeState = {
-  theme: getTheme() || "light",
+  theme: "light",
 };
-
 export const themeSlice = createSlice({
   name: "theme",
   initialState,
   reducers: {
-    setAppTheme: (state: ThemeState, action: PayloadAction<ThemeState>) => {
-      state.theme = action.payload.theme;
-      setTheme(action.payload.theme);
-    },
-    toggleAppTheme: (state: ThemeState) => {
-      const currentTheme = state.theme;
-      if (currentTheme === "light") {
-        state.theme = "dark";
-        toggleTheme(false);
-      } else {
-        state.theme = "light";
-        toggleTheme(true);
-      }
+    setAppTheme: (state: ThemeState, action: PayloadAction<Theme>) => {
+      state.theme = action.payload;
+      // setTheme(action.payload.theme);
     },
   },
 });

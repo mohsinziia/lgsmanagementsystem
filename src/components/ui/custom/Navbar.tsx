@@ -1,3 +1,4 @@
+"use client";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -13,6 +14,8 @@ import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import ToggleThemeButton from "./toggleThemeButton";
+import { TooltipProvider } from "../tooltip";
 
 const Navbar = () => {
   return (
@@ -22,7 +25,12 @@ const Navbar = () => {
           Dashboard App
         </li>
       </ul>
-      <ul className="mx-4">
+      <ul className="mx-4 flex flex-row">
+        <li>
+          <TooltipProvider>
+            <ToggleThemeButton />
+          </TooltipProvider>
+        </li>
         <li>
           <Button onClick={() => signIn()} className="h-9 px-4 py-2 mx-4 ">
             Sign In
