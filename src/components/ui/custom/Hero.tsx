@@ -10,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../card";
+import EnterDashboard from "./EnterDashboard";
 
 const Hero = () => {
   return (
@@ -31,6 +32,7 @@ const Hero = () => {
         >
           Sign In
         </Button>
+        <EnterDashboard />
       </Card>
     </div>
   );

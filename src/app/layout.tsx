@@ -54,12 +54,10 @@ export default function RootLayout({
   const theme = (cookieStore.get("theme")?.value as Theme) || "light";
   const font = (cookieStore.get("font")?.value as Font) || "arial";
 
-  console.log(font);
-
   return (
     <html lang="en">
       <body
-        className={`relative ${interFont.variable} ${manropeFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} relative ${interFont.variable} ${manropeFont.variable} ${poppinsFont.variable} antialiased `}
       >
         <StoreProvider initialTheme={theme} initialFont={font}>
           <AuthProvider>{children}</AuthProvider>
