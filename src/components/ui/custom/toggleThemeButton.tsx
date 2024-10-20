@@ -33,28 +33,23 @@ const ToggleThemeButton = () => {
   };
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Link
-          href="#"
-          onClick={() => toggleTheme()}
-          className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-            theme === "dark"
-              ? "text-accent-foreground bg-accent"
-              : "text-muted-foreground"
-          } transition-colors hover:text-foreground md:h-8 md:w-8`}
-        >
-          {theme === "dark" ? (
-            <Sun className="h-5 w-5" />
-          ) : (
-            <Moon className="h-5 w-5" />
-          )}
+    <Link
+      href="#"
+      onClick={() => toggleTheme()}
+      className={`flex h-9 w-9 items-center justify-center rounded-lg ${
+        theme === "dark"
+          ? "text-accent-foreground bg-accent"
+          : "text-muted-foreground"
+      } transition-colors hover:text-foreground md:h-8 md:w-8`}
+    >
+      {theme === "dark" ? (
+        <Sun className="h-5 w-5" />
+      ) : (
+        <Moon className="h-5 w-5" />
+      )}
 
-          <span className="sr-only">Toggle Dark Mode</span>
-        </Link>
-      </TooltipTrigger>
-      <TooltipContent side="right">Toggle Dark Mode</TooltipContent>
-    </Tooltip>
+      <span className="sr-only">Toggle Dark Mode</span>
+    </Link>
   );
 };
 
