@@ -10,6 +10,7 @@ import "./globals.css";
 import Navbar from "@/components/ui/custom/Navbar";
 import { cookies } from "next/headers";
 import { Font, Theme } from "@/lib/appearanceSlice";
+import FontWrapper from "@/components/ui/FontWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -60,7 +61,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} relative ${interFont.variable} ${manropeFont.variable} ${poppinsFont.variable} antialiased `}
       >
         <StoreProvider initialTheme={theme} initialFont={font}>
-          <AuthProvider>{children}</AuthProvider>
+          <FontWrapper>
+            <AuthProvider>{children}</AuthProvider>
+          </FontWrapper>
         </StoreProvider>
       </body>
     </html>

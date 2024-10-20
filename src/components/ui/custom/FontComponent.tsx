@@ -8,14 +8,14 @@ const FontComponent = () => {
   const { font } = useAppSelector((state: RootState) => state.appearanceStore);
 
   useEffect(() => {
-    const actualFontClassName = `font-${font}`;
-    document.body.classList.add(actualFontClassName);
-    document.body.classList.remove(
-      ...fontClasses.filter(
-        (fontElement: string) => fontElement !== actualFontClassName
-      )
-    );
-    console.log(`ActualFontClassName: ${actualFontClassName}`);
+    // const actualFontClassName = `font-${font}`;
+    // document.body.classList.add(actualFontClassName);
+    // document.body.classList.remove(
+    //   ...fontClasses.filter(
+    //     (fontElement: string) => fontElement !== actualFontClassName
+    //   )
+    // );
+    // console.log(`ActualFontClassName: ${actualFontClassName}`);
   }, [font]);
 
   return <></>;

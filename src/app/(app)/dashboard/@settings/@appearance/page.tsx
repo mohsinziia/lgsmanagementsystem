@@ -47,15 +47,15 @@ const AppearancePage = () => {
     }
   }, [theme]);
 
-  useEffect(() => {
-    const actualFontClassName = `font-${font}`;
-    document.body.classList.add(actualFontClassName);
-    document.body.classList.remove(
-      ...fontClasses.filter(
-        (fontElement: string) => fontElement !== actualFontClassName
-      )
-    );
-  }, [font]);
+  // useEffect(() => {
+  //   const actualFontClassName = `font-${font}`;
+  //   document.body.classList.add(actualFontClassName);
+  //   document.body.classList.remove(
+  //     ...fontClasses.filter(
+  //       (fontElement: string) => fontElement !== actualFontClassName
+  //     )
+  //   );
+  // }, [font]);
 
   const setAppearance = (newTheme: Theme, newFont: Font) => {
     dispatch(setAppAppearance({ theme: newTheme, font: newFont }));
