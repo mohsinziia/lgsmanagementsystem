@@ -8,6 +8,7 @@ const fontMap = {
   inter: "font-inter",
   manrope: "font-manrope",
   poppins: "font-poppins",
+  robotoMono: "font-robotoMono",
 };
 
 const FontWrapper = ({ children }: { children: React.ReactNode }) => {

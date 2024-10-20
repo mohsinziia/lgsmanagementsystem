@@ -61,6 +61,7 @@ const config: Config = {
         inter: ["var(--font-inter)"],
         manrope: ["var(--font-manrope)"],
         poppins: ["var(--font-poppins)"],
+        robotoMono: ["var(--font-roboto-mono)"],
       },
     },
   },

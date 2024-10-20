@@ -78,7 +78,13 @@ const AppearancePage = () => {
   };
 
   const ThemeSchema = z.enum(["light", "dark"]);
-  const FontSchema = z.enum(["inter", "manrope", "arial", "poppins"]);
+  const FontSchema = z.enum([
+    "inter",
+    "manrope",
+    "arial",
+    "poppins",
+    "robotoMono",
+  ]);
   const formSchema = z.object({
     font: FontSchema,
     theme: ThemeSchema,
@@ -174,10 +180,21 @@ const AppearancePage = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="arial">Arial (Default)</SelectItem>
-                    <SelectItem value="inter">Inter</SelectItem>
-                    <SelectItem value="manrope">Manrope</SelectItem>
-                    <SelectItem value="poppins">Poppins</SelectItem>
+                    <SelectItem value="arial" className="font-arial">
+                      Arial (Default)
+                    </SelectItem>
+                    <SelectItem value="inter" className="font-inter">
+                      Inter
+                    </SelectItem>
+                    <SelectItem value="manrope" className="font-manrope">
+                      Manrope
+                    </SelectItem>
+                    <SelectItem value="poppins" className="font-poppins">
+                      Poppins
+                    </SelectItem>
+                    <SelectItem value="robotoMono" className="font-robotoMono">
+                      Roboto Mono
+                    </SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>

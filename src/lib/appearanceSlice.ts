@@ -2,12 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export type Theme = "light" | "dark";
-export type Font = "inter" | "manrope" | "arial" | "poppins";
+export type Font = "inter" | "manrope" | "arial" | "poppins" | "robotoMono";
 export const fontClasses: string[] = [
   "font-inter",
   "font-manrope",
   "font-arial",
   "font-poppins",
+  "font-robotoMono",
 ];
 
 type AppearanceState = {
