@@ -1,15 +1,7 @@
-import { Button } from "@/components/ui/button";
 import Hero from "@/components/ui/custom/Hero";
 import Navbar from "@/components/ui/custom/Navbar";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { RootState } from "@/lib/store";
-import { setAppTheme } from "@/lib/themeSlice";
 
 export default function Home() {
-  // const theme = useAppSelector((state: RootState) => state.themeStore.theme);
-  // const dispatch = useAppDispatch();
-  // dispatch(setAppTheme(theme));
-
   interface SessionUser {
     name?: string | null;
     email?: string | null;

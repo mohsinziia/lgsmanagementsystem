@@ -20,12 +20,23 @@ import ThemeCard from "@/components/ui/custom/ThemeCard";
 import { Label } from "@/components/ui/label";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
-import { setAppTheme, Theme } from "@/lib/themeSlice";
+import { fontClasses, setAppAppearance, Theme } from "@/lib/appearanceSlice";
 import { setCookie } from "nookies";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Font } from "@/lib/appearanceSlice";
 
 const AppearancePage = () => {
-  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  const { font, theme } = useAppSelector(
+    (state: RootState) => state.appearanceStore
+  );
   const [currentTheme, setCurrentTheme] = useState<Theme>(theme);
+  const [currentFont, setCurrentFont] = useState<Font>(font);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -36,9 +47,23 @@ const AppearancePage = () => {
     }
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
-    dispatch(setAppTheme(newTheme));
+  useEffect(() => {
+    const actualFontClassName = `font-${font}`;
+    document.body.classList.add(actualFontClassName);
+    document.body.classList.remove(
+      ...fontClasses.filter(
+        (fontElement: string) => fontElement !== actualFontClassName
+      )
+    );
+  }, [font]);
+
+  const setAppearance = (newTheme: Theme, newFont: Font) => {
+    dispatch(setAppAppearance({ theme: newTheme, font: newFont }));
     setCookie(null, "theme", newTheme, {
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+    });
+    setCookie(null, "font", newFont, {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
@@ -48,21 +73,30 @@ const AppearancePage = () => {
     setCurrentTheme(theme);
   };
 
+  const handleFontChange = (font: Font) => {
+    setCurrentFont(font);
+  };
+
   const ThemeSchema = z.enum(["light", "dark"]);
+  const FontSchema = z.enum(["inter", "manrope", "arial", "poppins"]);
   const formSchema = z.object({
+    font: FontSchema,
     theme: ThemeSchema,
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      font: currentFont || "arial",
       theme: "light",
     },
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
     handleThemeChange(data.theme);
-    setTheme(data.theme);
+    handleFontChange(data.font);
+    setAppearance(data.theme, data.font);
+    console.log(data);
   }
 
   return (
@@ -81,7 +115,7 @@ const AppearancePage = () => {
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <label
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               htmlFor=":r5d:-form-item"
@@ -122,7 +156,37 @@ const AppearancePage = () => {
             >
               Set the font you want to use in the dashboard.
             </p>
-          </div>
+          </div> */}
+
+          <FormField
+            control={form.control}
+            name="font"
+            render={({ field }) => (
+              <FormItem className="max-w-md space-y-1">
+                <FormLabel>Font</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a font to display" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="arial">Arial (Default)</SelectItem>
+                    <SelectItem value="inter">Inter</SelectItem>
+                    <SelectItem value="manrope">Manrope</SelectItem>
+                    <SelectItem value="poppins">Poppins</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Choose the font you want to display in the dashboard
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <FormControl>
             <FormItem>

@@ -4,12 +4,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
 import Link from "next/link";
 import { Moon, Sun } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { setAppTheme } from "@/lib/themeSlice";
+import { setAppAppearance } from "@/lib/appearanceSlice";
 import { RootState } from "@/lib/store";
 import { setCookie } from "nookies";
 
 const ToggleThemeButton = () => {
-  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  const { theme, font } = useAppSelector(
+    (state: RootState) => state.appearanceStore
+  );
   // const [currentTheme, setCurrentTheme] = useState(theme);
   const dispatch = useAppDispatch();
 
@@ -23,7 +25,7 @@ const ToggleThemeButton = () => {
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
-    dispatch(setAppTheme(newTheme));
+    dispatch(setAppAppearance({ theme: newTheme, font }));
     setCookie(null, "theme", newTheme, {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",

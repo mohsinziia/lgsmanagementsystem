@@ -1,5 +1,5 @@
 import React from "react";
-import { Theme } from "@/lib/themeSlice";
+import { Theme } from "@/lib/appearanceSlice";
 
 const lightColors = ["bg-[#ecedef]", "bg-white"];
 const darkColors = ["bg-slate-400", "bg-slate-800", "bg-slate-950"];

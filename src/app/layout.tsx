@@ -3,10 +3,13 @@ import StoreProvider from "./StoreProvider";
 
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Inter, Manrope, Poppins } from "next/font/google";
+
 import "./globals.css";
+
 import Navbar from "@/components/ui/custom/Navbar";
 import { cookies } from "next/headers";
-import { Theme } from "@/lib/themeSlice";
+import { Font, Theme } from "@/lib/appearanceSlice";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,6 +20,24 @@ const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
+});
+
+const interFont = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: "400",
+});
+
+const manropeFont = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  weight: "400",
+});
+
+const poppinsFont = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -31,13 +52,16 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies();
   const theme = (cookieStore.get("theme")?.value as Theme) || "light";
+  const font = (cookieStore.get("font")?.value as Font) || "arial";
+
+  console.log(font);
 
   return (
     <html lang="en">
       <body
-        className={`relative ${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`relative ${interFont.variable} ${manropeFont.variable} ${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <StoreProvider initialTheme={theme}>
+        <StoreProvider initialTheme={theme} initialFont={font}>
           <AuthProvider>{children}</AuthProvider>
         </StoreProvider>
       </body>

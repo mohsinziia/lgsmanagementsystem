@@ -47,6 +47,7 @@ import {
 import React from "react";
 import { signOut } from "next-auth/react";
 import ToggleThemeButton from "./toggleThemeButton";
+import FontComponent from "./FontComponent";
 export default function Dashboard({
   children,
   window,
@@ -169,6 +170,7 @@ export default function Dashboard({
           </TooltipProvider>
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
+          <FontComponent />
           <TooltipProvider>
             <ToggleThemeButton />
             <Tooltip>

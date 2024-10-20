@@ -22,7 +22,9 @@ export default function Layout({
   settings: React.ReactNode;
 }>) {
   const [currentWindow, setCurrentWindow] = useState("Main");
-  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  const { theme, font } = useAppSelector(
+    (state: RootState) => state.appearanceStore
+  );
 
   const changeWindow = (window: string) => {
     setCurrentWindow(window);

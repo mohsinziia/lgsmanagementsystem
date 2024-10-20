@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ThemeContainerLabel from "./ThemeContainerLabel";
 import ThemeCard from "./ThemeCard";
 
-import { Theme } from "@/lib/themeSlice";
+import { Theme } from "@/lib/appearanceSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { RadioGroup, RadioGroupItem } from "../radio-group";
@@ -13,7 +13,7 @@ const ThemeListContainer = () => {
   const [currentTheme, setCurrentTheme] = useState<Theme>("light");
   const dispatch = useAppDispatch();
 
-  const theme = useAppSelector((state: RootState) => state.themeStore.theme);
+  const { theme } = useAppSelector((state: RootState) => state.appearanceStore);
 
   const handleThemeChange = (theme: Theme) => {
     // dispatch(setAppTheme( theme ));

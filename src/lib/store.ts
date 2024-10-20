@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "@/lib/themeSlice";
+import appearanceReducer from "@/lib/appearanceSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      themeStore: themeReducer,
+      appearanceStore: appearanceReducer,
     },
   });
 };
