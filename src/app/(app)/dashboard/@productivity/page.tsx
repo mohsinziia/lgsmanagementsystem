@@ -1,7 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -75,7 +73,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import AttendancePieChart from "@/components/ui/custom/AttendancePieChart";
 import {
   Popover,
   PopoverTrigger,
@@ -95,27 +92,24 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { PopoverClose } from "@radix-ui/react-popover";
 import { placeholderTodos } from "@/lib/placeholder-todos";
 import RemoveTodo from "@/components/ui/custom/RemoveTodo";
 import CompleteTodo from "@/components/ui/custom/CompleteTodo";
+import { todoSchema } from "@/schemas/todoSchema";
 
 const ProductivityPage = () => {
   const [todos, setTodos] = useState([...placeholderTodos]);
   const fulfilledTodos = todos.filter((todo) => todo.completed);
   const pendingTodos = todos.filter((todo) => !todo.completed);
 
-  const formSchema = z.object({
-    todo: z.string().max(300),
-  });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof todoSchema>>({
+    resolver: zodResolver(todoSchema),
     defaultValues: {
       todo: "",
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof todoSchema>) => {
     try {
       const response = await axios.post("/api/create-todo", {
         todo: data.todo,

@@ -1,9 +1,8 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import Dashboard from "@/components/ui/custom/Dashboard";
-import { useAppSelector } from "@/lib/hooks";
-import { RootState } from "@/lib/store";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { User } from "next-auth";
 
 export default function Layout({
   main,
@@ -22,22 +21,24 @@ export default function Layout({
   settings: React.ReactNode;
 }>) {
   const [currentWindow, setCurrentWindow] = useState("Main");
-  const { theme, font } = useAppSelector(
-    (state: RootState) => state.appearanceStore
-  );
+  const { data: session } = useSession();
 
   const changeWindow = (window: string) => {
     setCurrentWindow(window);
   };
 
-  return (
-    <Dashboard window={currentWindow} handleWindowChange={changeWindow}>
-      {currentWindow === "Main" && main}
-      {currentWindow === "Attendance and Student Performance" && attendance}
-      {currentWindow === "Academics" && academics}
-      {currentWindow === "Events" && events}
-      {currentWindow === "Productivity" && productivity}
-      {currentWindow === "Settings" && settings}
-    </Dashboard>
-  );
+  if (session) {
+    return (
+      <Dashboard window={currentWindow} handleWindowChange={changeWindow}>
+        {currentWindow === "Main" && main}
+        {currentWindow === "Attendance and Student Performance" && attendance}
+        {currentWindow === "Academics" && academics}
+        {currentWindow === "Events" && events}
+        {currentWindow === "Productivity" && productivity}
+        {currentWindow === "Settings" && settings}
+      </Dashboard>
+    );
+  }
+
+  return <h2>Please sign in to continue</h2>;
 }

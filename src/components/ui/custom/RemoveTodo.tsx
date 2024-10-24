@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import { XSquareIcon } from "lucide-react";
 import Link from "next/link";

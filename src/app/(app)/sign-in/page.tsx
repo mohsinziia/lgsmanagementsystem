@@ -24,19 +24,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { signInSchema } from "@/schemas/signInSchema";
 
 const SignIn = () => {
-  const formSchema = z.object({
-    email: z.string(),
-  });
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof signInSchema>>({
+    resolver: zodResolver(signInSchema),
     defaultValues: {
       email: "",
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {};
+  const onSubmit = (data: z.infer<typeof signInSchema>) => {};
 
   const loginUser = async (provider: string) => {
     const response = await signIn(provider, {

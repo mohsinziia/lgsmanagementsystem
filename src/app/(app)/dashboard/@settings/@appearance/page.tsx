@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Font } from "@/lib/appearanceSlice";
+import { formSchema } from "@/schemas/apperanceSchema";
 
 const AppearancePage = () => {
   const { font, theme } = useAppSelector(
@@ -76,19 +77,6 @@ const AppearancePage = () => {
   const handleFontChange = (font: Font) => {
     setCurrentFont(font);
   };
-
-  const ThemeSchema = z.enum(["light", "dark"]);
-  const FontSchema = z.enum([
-    "inter",
-    "manrope",
-    "arial",
-    "poppins",
-    "robotoMono",
-  ]);
-  const formSchema = z.object({
-    font: FontSchema,
-    theme: ThemeSchema,
-  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
