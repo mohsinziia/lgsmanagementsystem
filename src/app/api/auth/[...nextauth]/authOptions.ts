@@ -51,10 +51,8 @@ export const authOptions: NextAuthOptions = {
         } else {
           console.log("User already exists");
         }
-        return true;
       } catch (error) {
         console.error("Error saving user:", error);
-        return false;
       }
     },
     signOut({ token, session }) {
