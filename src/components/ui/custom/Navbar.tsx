@@ -15,7 +15,12 @@ import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ToggleThemeButton from "./toggleThemeButton";
-import { TooltipProvider } from "../tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../tooltip";
 
 const Navbar = () => {
   return (
@@ -28,7 +33,12 @@ const Navbar = () => {
       <ul className="mx-4 flex flex-row">
         <li>
           <TooltipProvider>
-            <ToggleThemeButton />
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ToggleThemeButton />
+              </TooltipTrigger>
+              <TooltipContent>Toggle theme</TooltipContent>
+            </Tooltip>
           </TooltipProvider>
         </li>
         <li>

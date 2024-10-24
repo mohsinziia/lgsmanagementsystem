@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -20,6 +20,8 @@ import {
   ShoppingCart,
   Truck,
   Users2,
+  CheckSquare2,
+  XSquareIcon,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -74,8 +76,73 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AttendancePieChart from "@/components/ui/custom/AttendancePieChart";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
+import { PopoverClose } from "@radix-ui/react-popover";
+import { placeholderTodos } from "@/lib/placeholder-todos";
+import RemoveTodo from "@/components/ui/custom/RemoveTodo";
+import CompleteTodo from "@/components/ui/custom/CompleteTodo";
 
-const AttendancePage = () => {
+const ProductivityPage = () => {
+  const [todos, setTodos] = useState([...placeholderTodos]);
+  const fulfilledTodos = todos.filter((todo) => todo.completed);
+  const pendingTodos = todos.filter((todo) => !todo.completed);
+
+  const formSchema = z.object({
+    todo: z.string().max(300),
+  });
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      todo: "",
+    },
+  });
+
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const response = await axios.post("/api/create-todo", {
+        todo: data.todo,
+      });
+      console.log("Todo created successfully");
+      toast.success("Todo has been created successfully");
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      console.log(axiosError);
+      toast.error("Error while creating todo");
+      console.log(`Error while creating todo: ${error}`);
+    }
+  };
+
+  const handleDeleteTodo = async (todoId: string) => {
+    setTodos(todos.filter((todo) => todo._id !== todoId));
+  };
+
+  const handleCompleteTodo = async (todoId: string) => {
+    const newTodos = todos.map((todo) => {
+      if (todo._id === todoId) return { ...todo, completed: true };
+      return todo;
+    });
+
+    setTodos(newTodos);
+  };
+
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -89,7 +156,39 @@ const AttendancePage = () => {
               </CardDescription>
             </CardHeader>
             <CardFooter>
-              <Button>Add a Todo</Button>
+              <Popover>
+                <PopoverTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2">
+                  Add a Todo
+                </PopoverTrigger>
+                <PopoverContent className="w-80" sideOffset={10} side="bottom">
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="todo"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Add a new todo</FormLabel>
+                            <FormControl>
+                              <div className="flex w-full max-w-sm items-center space-x-2">
+                                <Input
+                                  type="text"
+                                  placeholder="Enter your todo here"
+                                  {...field}
+                                />
+                                <Button type="submit">Submit</Button>
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </form>
+                  </Form>
+                </PopoverContent>
+              </Popover>
             </CardFooter>
           </Card>
         </div>
@@ -100,7 +199,7 @@ const AttendancePage = () => {
               <TabsTrigger value="completed-todos">Completed Todos</TabsTrigger>
               <TabsTrigger value="remaining-todos">Remaining Todos</TabsTrigger>
             </TabsList>
-            <div className="ml-auto flex items-center gap-2">
+            {/* <div className="ml-auto flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -126,7 +225,7 @@ const AttendancePage = () => {
                 <File className="h-3.5 w-3.5" />
                 <span className="sr-only sm:not-sr-only">Export</span>
               </Button>
-            </div>
+            </div> */}
           </div>
           <TabsContent value="all-todos">
             <Card x-chunk="dashboard-05-chunk-3">
@@ -135,183 +234,176 @@ const AttendancePage = () => {
                 <CardDescription>All Todos</CardDescription>
               </CardHeader>
               <CardContent>
-                <Table>
+                <Table className="">
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Customer</TableHead>
-                      <TableHead className="hidden sm:table-cell">
-                        Type
-                      </TableHead>
+                      <TableHead>Todo</TableHead>
                       <TableHead className="hidden sm:table-cell">
                         Status
                       </TableHead>
-                      <TableHead className="hidden md:table-cell">
+                      {/* <TableHead className="hidden md:table-cell">
                         Date
                       </TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
+                      <TableHead className="hidden md:table-cell">
+                        Time
+                      </TableHead> */}
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow className="bg-accent">
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
+                    {todos.map((todo) => (
+                      <TableRow
+                        className={`${
+                          todo.completed && "bg-accent"
+                        }  flex flex-col items-center sm:table-row py-4`}
+                        key={todo.name}
+                      >
+                        <TableCell className="p-1 sm:p-4">
+                          <div className="font-medium text-wrap text-lg sm:text-sm">
+                            {todo.name}
+                          </div>
+                          {/* <div className="hidden text-sm text-muted-foreground md:inline">
+                          Complete physics assignment
+                        </div> */}
+                        </TableCell>
+                        <TableCell className="sm:table-cell p-1 sm:p-4">
+                          <Badge
+                            className="text-xs"
+                            variant={todo.completed ? "default" : "destructive"}
+                          >
+                            {todo.completed ? "Fulfilled" : "Pending"}
+                          </Badge>
+                        </TableCell>
+                        {/* <TableCell className="hidden md:table-cell">
+                          {todo.date}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          {todo.time}
+                        </TableCell> */}
+                        <TableCell className="md:table-cell p-1 sm:p-4">
+                          <div className="justify-self-end flex sm:w-max sm:grid sm:grid-cols-2 gap-2">
+                            {!todo.completed && (
+                              <CompleteTodo
+                                todoId={todo._id}
+                                onTodoComplete={handleCompleteTodo}
+                              />
+                            )}
+
+                            <RemoveTodo
+                              onTodoDelete={handleDeleteTodo}
+                              todoId={todo._id}
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="completed-todos">
+            <Card x-chunk="dashboard-05-chunk-3">
+              <CardHeader className="px-7">
+                <CardTitle>Todos</CardTitle>
+                <CardDescription>Completed Todos</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table className="">
+                  <TableHeader>
                     <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Olivia Smith</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          olivia@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Refund
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-24
-                      </TableCell>
-                      <TableCell className="text-right">$150.00</TableCell>
+                      <TableHead>Todo</TableHead>
+                      <TableHead className="hidden sm:table-cell">
+                        Status
+                      </TableHead>
                     </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {fulfilledTodos.map((todo) => (
+                      <TableRow
+                        className={`bg-accent flex flex-col items-center sm:table-row py-4`}
+                        key={todo.name}
+                      >
+                        <TableCell className="p-1 sm:p-4">
+                          <div className="font-medium text-wrap text-lg sm:text-sm">
+                            {todo.name}
+                          </div>
+                          {/* <div className="hidden text-sm text-muted-foreground md:inline">
+                          Complete physics assignment
+                        </div> */}
+                        </TableCell>
+                        <TableCell className="sm:table-cell p-1 sm:p-4">
+                          <Badge className="text-xs" variant={"default"}>
+                            Fulfilled
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="md:table-cell p-1 sm:p-4">
+                          <div className="justify-self-end flex sm:w-max sm:grid sm:grid-cols-2 gap-2">
+                            <RemoveTodo
+                              onTodoDelete={handleDeleteTodo}
+                              todoId={todo._id}
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="remaining-todos">
+            <Card x-chunk="dashboard-05-chunk-3">
+              <CardHeader className="px-7">
+                <CardTitle>Todos</CardTitle>
+                <CardDescription>Pending Todos</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Table className="">
+                  <TableHeader>
                     <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Noah Williams</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          noah@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Subscription
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-25
-                      </TableCell>
-                      <TableCell className="text-right">$350.00</TableCell>
+                      <TableHead>Todo</TableHead>
+                      <TableHead className="hidden sm:table-cell">
+                        Status
+                      </TableHead>
                     </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Emma Brown</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          emma@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-26
-                      </TableCell>
-                      <TableCell className="text-right">$450.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Olivia Smith</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          olivia@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Refund
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-24
-                      </TableCell>
-                      <TableCell className="text-right">$150.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Emma Brown</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          emma@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-26
-                      </TableCell>
-                      <TableCell className="text-right">$450.00</TableCell>
-                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {pendingTodos.map((todo) => (
+                      <TableRow
+                        className={`flex flex-col items-center sm:table-row py-4`}
+                        key={todo.name}
+                      >
+                        <TableCell className="p-1 sm:p-4">
+                          <div className="font-medium text-wrap text-lg sm:text-sm">
+                            {todo.name}
+                          </div>
+                        </TableCell>
+                        <TableCell className="sm:table-cell p-1 sm:p-4">
+                          <Badge className="text-xs" variant={"destructive"}>
+                            {"Pending"}
+                          </Badge>
+                        </TableCell>
+                        {/* <TableCell className="hidden md:table-cell">
+                          {todo.date}
+                        </TableCell>
+                        <TableCell className="hidden md:table-cell">
+                          {todo.time}
+                        </TableCell> */}
+                        <TableCell className="md:table-cell p-1 sm:p-4">
+                          <div className="justify-self-end flex sm:w-max sm:grid sm:grid-cols-2 gap-2">
+                            <CompleteTodo
+                              todoId={todo._id}
+                              onTodoComplete={handleCompleteTodo}
+                            />
+
+                            <RemoveTodo
+                              onTodoDelete={handleDeleteTodo}
+                              todoId={todo._id}
+                            />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>
@@ -323,4 +415,4 @@ const AttendancePage = () => {
   );
 };
 
-export default AttendancePage;
+export default ProductivityPage;

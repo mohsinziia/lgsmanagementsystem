@@ -11,6 +11,7 @@ import Navbar from "@/components/ui/custom/Navbar";
 import { cookies } from "next/headers";
 import { Font, Theme } from "@/lib/appearanceSlice";
 import FontWrapper from "@/components/ui/FontWrapper";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -69,6 +70,7 @@ export default function RootLayout({
         <StoreProvider initialTheme={theme} initialFont={font}>
           <FontWrapper>
             <AuthProvider>{children}</AuthProvider>
+            <Toaster />
           </FontWrapper>
         </StoreProvider>
       </body>

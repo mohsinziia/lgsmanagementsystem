@@ -53,4 +53,4 @@ const ToggleThemeButton = () => {
   );
 };
 
-export default ToggleThemeButton;
+export default React.forwardRef(ToggleThemeButton);
