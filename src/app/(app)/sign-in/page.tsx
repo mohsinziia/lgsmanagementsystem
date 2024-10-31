@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { signInSchema } from "@/schemas/signInSchema";
-
 const SignIn = () => {
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),

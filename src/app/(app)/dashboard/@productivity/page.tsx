@@ -92,7 +92,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios, { AxiosError } from "axios";
 import { toast } from "sonner";
-import { placeholderTodos } from "@/lib/placeholder-todos";
+import { placeholderTodos } from "@/lib/placeholder-data";
 import RemoveTodo from "@/components/ui/custom/RemoveTodo";
 import CompleteTodo from "@/components/ui/custom/CompleteTodo";
 import { todoSchema } from "@/schemas/todoSchema";

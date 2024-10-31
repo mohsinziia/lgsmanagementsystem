@@ -29,11 +29,11 @@ import {
 export const description = "An interactive pie chart";
 
 const desktopData = [
-  { month: "january", desktop: 186, fill: "var(--color-january)" },
-  { month: "february", desktop: 305, fill: "var(--color-february)" },
-  { month: "march", desktop: 237, fill: "var(--color-march)" },
-  { month: "april", desktop: 173, fill: "var(--color-april)" },
-  { month: "may", desktop: 209, fill: "var(--color-may)" },
+  { month: "january", desktop: 4, fill: "var(--color-january)" },
+  { month: "february", desktop: 4, fill: "var(--color-february)" },
+  { month: "march", desktop: 2, fill: "var(--color-march)" },
+  { month: "april", desktop: 6, fill: "var(--color-april)" },
+  { month: "may", desktop: 4, fill: "var(--color-may)" },
 ];
 
 const chartConfig = {
@@ -176,7 +176,7 @@ export default function AttendancePieChart() {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Days
                         </tspan>
                       </text>
                     );

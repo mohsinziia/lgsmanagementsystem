@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -74,8 +74,11 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import AttendancePieChart from "@/components/ui/custom/AttendancePieChart";
+import { placeholderTimetable } from "@/lib/placeholder-data";
 
 const AttendancePage = () => {
+  const [timetable, setTimetable] = useState([...placeholderTimetable]);
+
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-3 xl:grid-cols-3">
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -178,180 +181,52 @@ const AttendancePage = () => {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Customer</TableHead>
+                      <TableHead>Day</TableHead>
                       <TableHead className="hidden sm:table-cell">
-                        Type
+                        8:00-9:00
                       </TableHead>
                       <TableHead className="hidden sm:table-cell">
-                        Status
+                        9:00-10:00
                       </TableHead>
                       <TableHead className="hidden md:table-cell">
-                        Date
+                        10:00-11:00
                       </TableHead>
-                      <TableHead className="text-right">Amount</TableHead>
+                      <TableHead className="hidden md:table-cell">
+                        11:00-12:00
+                      </TableHead>
+                      <TableHead className="hidden md:table-cell">
+                        12:00-1:00
+                      </TableHead>
+                      <TableHead className="hidden md:table-cell">
+                        1:00-2:00
+                      </TableHead>
+                      <TableHead className="hidden md:table-cell">
+                        2:00-3:00
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    <TableRow className="bg-accent">
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Olivia Smith</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          olivia@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Refund
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-24
-                      </TableCell>
-                      <TableCell className="text-right">$150.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Noah Williams</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          noah@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Subscription
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-25
-                      </TableCell>
-                      <TableCell className="text-right">$350.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Emma Brown</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          emma@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-26
-                      </TableCell>
-                      <TableCell className="text-right">$450.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Liam Johnson</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          liam@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-23
-                      </TableCell>
-                      <TableCell className="text-right">$250.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Olivia Smith</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          olivia@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Refund
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="outline">
-                          Declined
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-24
-                      </TableCell>
-                      <TableCell className="text-right">$150.00</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <div className="font-medium">Emma Brown</div>
-                        <div className="hidden text-sm text-muted-foreground md:inline">
-                          emma@example.com
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        Sale
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">
-                        <Badge className="text-xs" variant="secondary">
-                          Fulfilled
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-06-26
-                      </TableCell>
-                      <TableCell className="text-right">$450.00</TableCell>
-                    </TableRow>
+                    {timetable.map((row) => (
+                      <TableRow
+                        className={`flex flex-col items-center sm:table-row py-4`}
+                        key={row.name}
+                      >
+                        <TableCell className="p-1 sm:p-4">
+                          <div className="font-medium text-wrap text-lg sm:text-sm">
+                            {row.name}
+                          </div>
+                        </TableCell>
+
+                        {row.classes.map((rowClass, index) => (
+                          <TableCell
+                            key={index}
+                            className="hidden md:table-cell"
+                          >
+                            {rowClass}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </CardContent>
